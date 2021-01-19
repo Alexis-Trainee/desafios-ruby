@@ -1,0 +1,79 @@
+arr = [
+  [1, 0, 0, 0, 2],
+  [0, 0, 0, 0, 0]
+]
+
+
+def parking_exit(arr)
+  result = []
+  level = 0; space = 0
+  arr.each_with_index {|f, i| (level = i; space = f.index(2)) if f.index(2) != nil}
+  
+  puts "LEVEL #{level}"
+  puts "SPACE #{space}"
+  puts ''
+  
+  puts "arr.length-1 = #{arr.length-1}"
+  puts "arr[0].length-1 = #{ arr[0].length-1}"
+  puts "\n"
+  
+  begin
+  puts ">>Entrando em begin<<"
+  puts "level é igual a #{level}"
+  puts "space é igual a #{space}"
+  #space igual a 4, este é o índice do número 2 no arr
+  puts "\n"
+  
+    if level == arr.length - 1 # 0 é igual a 1?
+     
+      if space != arr[0].length - 1
+          #puts "SPACE #{space}"
+          
+        result << "R" + (arr[0].length - space - 1).to_s
+        #result << "R" + 5-0-1 = 4.to_s 
+      end
+      
+      space = arr[0].length - 1
+      puts "Atribuido o valor #{space} a space linha 31"
+      
+    else
+        puts "\n arr[level][space] = #{arr[level][space]}"
+        puts "-------------------------------"
+        
+      if arr[level][space] == 1
+          
+          
+        count = 0
+        
+       while (arr[level][space] == 1 && level != arr.length ) do
+         level += 1;
+         count += 1
+          #puts "\n"
+          #puts "level agora é #{level}"
+          #puts "count é #{count}"
+          #puts "\n"
+        end
+        
+        result << "D" + count.to_s
+        
+        #1 iteração
+      else
+        pos = arr[level].index(1)
+        #puts "pos #{pos}"
+        #pos é menor que space se sim L se não R
+        d = pos < space ? "L" : "R"
+        #puts "d #{d}"
+        #result << L + 0-4 abs muda para valor absoluto 
+        result << d + ((pos-space).abs).to_s
+        space = pos
+        puts "SPACE = #{space}"
+      end
+      
+    end
+    
+  end until (space == arr[0].length - 1 && level == arr.length - 1)
+
+  result
+end
+
+puts parking_exit(arr)
